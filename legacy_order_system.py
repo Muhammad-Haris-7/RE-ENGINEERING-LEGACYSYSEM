@@ -39,6 +39,16 @@ def calculate_delivery_fee(delivery):
     return DELIVERY_FEES.get(delivery, 0)
 
 
+def validate_items(items):
+    """Raise ValueError if any item has a negative price or quantity."""
+    for item in items:
+        if item['price'] < 0:
+            raise ValueError(
+                f"Invalid price for '{item['name']}': {item['price']}")
+        if item['qty'] < 0:
+            raise ValueError(
+                f"Invalid quantity for '{item['name']}': {item['qty']}")
+
 def order_total(items, customer_type, delivery):
     """Return the final order total in PKR, rounded to 2 decimals."""
     subtotal = calculate_subtotal(items)
